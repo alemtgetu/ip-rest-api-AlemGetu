@@ -35,3 +35,6 @@ class IpAddressViewSet(viewsets.ModelViewSet):
 
     queryset = IpAddress.objects.all()
     serializer_class = IpAddressSerializer
+
+    def create(self, request):
+        return Response('Create CIDR block to create the IP if not in the list', status=status.HTTP_400_BAD_REQUEST)
