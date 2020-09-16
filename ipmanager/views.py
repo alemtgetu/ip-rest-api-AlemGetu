@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework import viewsets
 from ipmanager.models import CidrBlock, IpAddress
 from ipmanager.serializers import CidrBlockSerializer, IpAddressSerializer
 

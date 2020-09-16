@@ -1,5 +1,5 @@
-from ipmanger.models import CidrBlock, IpAddress
 from rest_framework import serializers
+from ipmanager.models import CidrBlock, IpAddress
 
 
 class CidrBlockSerializer(serializers.ModelSerializer):
