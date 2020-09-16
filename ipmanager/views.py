@@ -1,3 +1,15 @@
 from django.shortcuts import render
+from ipmanager.models import CidrBlock, IpAddress
+from ipmanager.serializers import CidrBlockSerializer, IpAddressSerializer
 
-# Create your views here.
+
+class CidrBlockViewSet(viewsets.ModelViewSet):
+
+    queryset = CidrBlock.objects.all()
+    serializer_class = CidrBlockSerializer
+
+
+class IpAddressViewSet(viewsets.ModelViewSet):
+
+    queryset = IpAddress.objects.all()
+    serializer_class = IpAddressSerializer
