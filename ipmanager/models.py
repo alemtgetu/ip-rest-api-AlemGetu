@@ -1,9 +1,10 @@
 from django.db import models
+from netfields import CidrAddressField
 
 
 class CidrBlock(models.Model):
 
-    cidr_block = models.CharField(max_length=20)
+    cidr_block = CidrAddressField()
 
 
 class IpAddress(models.Model):
