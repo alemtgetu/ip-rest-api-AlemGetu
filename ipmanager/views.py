@@ -24,9 +24,15 @@ class CidrBlockViewSet(viewsets.ModelViewSet):
 
             cidr_model_obj = CidrBlock.objects.create(cidr_block=cidr)
             # cidr_model_obj.save()
+
             for ip in list(cidr_net_obj.hosts()):
-                ip_add = IpAddress.objects.get_or_create(ip_address=str(
-                    ip), cidr_block=cidr_model_obj)
+                try:
+                    ip_add = IpAddress.objects.get(ip_address=str(ip))
+                    ip_add.cidr_block = cidr_model_obj
+                except IpAddress.DoesNotExist:
+                    ip_add = IpAddress(ip_address=str(
+                        ip), cidr_block=cidr_model_obj)
+                ip_add.save()
             return Response('Succesfully created CIDR and all IPs in the block', status=status.HTTP_201_CREATED)
         return Response('Invalid CIDR input', status=status.HTTP_400_BAD_REQUEST)
 
