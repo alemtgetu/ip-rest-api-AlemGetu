@@ -13,10 +13,26 @@ The REST API must support four endpoint:
 
 Requirements
 
-- pipenv
-  ` install pipenv by following guide -> https://pypi.org/project/pipenv/ `` Clone This Repo Cd To Project Dir and Install all pakcages with pipenv  `\$ pipenv install`Run Migrations`\$ python manage.py migrate`Run Server (default port 8000)`\$ python manage.py runserver```
-  Go to http://localhost:8000
+pipenv
+`install pipenv by following guide -> https://pypi.org/project/pipenv/`
 
-Routes
+Clone This Repo
+
+Cd To Project Dir and Install all pakcages with pipenv
+
+`$ pipenv install`
+
+Run Migrations
+
+`$ python manage.py migrate`
+
+Run Server (default port 8000)
+
+`$ python manage.py runserver`
+
+Go to http://localhost:8000 -> Using the browseable API you can perform CRUD operations
+
+** Routes **
+
 cidrs: "http://localhost:8000/cidrs/" list, add (adding cidr block will also create all the IPs), update, delete
 ips: "http://localhost:8000/ips/" list, update, delete
