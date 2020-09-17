@@ -11,7 +11,7 @@ class CidrBlock(models.Model):
 
 class IpAddress(models.Model):
 
-    cidr_block = models.ForeignKey(
+    cidr_block_id = models.ForeignKey(
         CidrBlock, related_name='ips', on_delete=models.CASCADE)
     ip_address = models.GenericIPAddressField(protocol='IPv4')
     STATUS_CHOICES = (
@@ -23,7 +23,11 @@ class IpAddress(models.Model):
 
     class Meta:
         #unique_together = ['ip_address', 'cidr_block']
-        ordering = ['ip_address']
+        ordering = ['cidr_block_id', 'ip_address']
 
     def __str__(self):
         return '%s: %s' % (self.ip_address, self.status)
+
+    @property
+    def cidr_info(self):
+        return '%s %s' % (self.cidr_block_id.cidr_block, self.cidr_block_id.netmask)

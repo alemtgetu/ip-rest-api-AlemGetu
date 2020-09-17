@@ -19,7 +19,8 @@ class IpAddressSerializer(serializers.ModelSerializer):
 
     # cidr_block = serializers.SlugRelatedField(
     #   read_only=True, slug_field='cidr_block')
+    cidr_info = serializers.ReadOnlyField()
 
     class Meta:
         model = IpAddress
-        fields = ['id', 'cidr_block', 'ip_address', 'status']
+        fields = ['id', 'cidr_block_id', 'cidr_info', 'ip_address', 'status']
