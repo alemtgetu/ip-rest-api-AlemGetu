@@ -17,22 +17,28 @@ class CidrBlockViewSet(viewsets.ModelViewSet):
         cidr = request.POST['cidr_block']
 
         if cidr:
+            # make sure the CIDR entry is valid CIDR entry
+            # by creating IPv4Network Object with it
             try:
-                cidr_net_obj = IPv4Network(cidr, strict=False)
+                cidr_net_obj = IPv4Network(cidr, strict=True)
             except Exception:
-                return Response(cidr_net_obj.errors, status=status.HTTP_400_BAD_REQUEST)
+                return Response('Invalid CIDR entry.', status=status.HTTP_400_BAD_REQUEST)
 
-            cidr_model_obj = CidrBlock.objects.create(cidr_block=cidr)
-            # cidr_model_obj.save()
+            # create CIDR model object with the cidr input from request and
+            # with the netmask from CIDR IPv4Network object
+            cidr_model_obj = CidrBlock.objects.create(
+                cidr_block=cidr, netmask=str(cidr_net_obj.netmask))
 
             for ip in list(cidr_net_obj.hosts()):
-                try:
+                '''try:
                     ip_add = IpAddress.objects.get(ip_address=str(ip))
                     ip_add.cidr_block = cidr_model_obj
                 except IpAddress.DoesNotExist:
                     ip_add = IpAddress(ip_address=str(
                         ip), cidr_block=cidr_model_obj)
-                ip_add.save()
+                ip_add.save()'''
+                ip_add = IpAddress.objects.get_or_create(ip_address=str(
+                    ip), cidr_block=cidr_model_obj)
             return Response('Succesfully created CIDR and all IPs in the block', status=status.HTTP_201_CREATED)
         return Response('Invalid CIDR input', status=status.HTTP_400_BAD_REQUEST)
 

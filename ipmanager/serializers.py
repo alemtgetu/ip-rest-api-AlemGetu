@@ -12,10 +12,14 @@ class CidrBlockSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CidrBlock
-        fields = ['id', 'cidr_block']  # , 'ips']
+        fields = ['id', 'cidr_block', 'netmask']  # , 'ips']
 
 
 class IpAddressSerializer(serializers.ModelSerializer):
+
+    # cidr_block = serializers.SlugRelatedField(
+    #   read_only=True, slug_field='cidr_block')
+
     class Meta:
         model = IpAddress
         fields = ['id', 'cidr_block', 'ip_address', 'status']

@@ -5,6 +5,8 @@ from netfields import CidrAddressField
 class CidrBlock(models.Model):
 
     cidr_block = CidrAddressField()
+    netmask = models.GenericIPAddressField(
+        protocol='IPv4', blank=True, null=True, default=None)
 
 
 class IpAddress(models.Model):
